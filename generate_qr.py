@@ -13,6 +13,7 @@ def main():
     parser.add_argument("-s", "--sheet", type=int, required=True, help="Sheet number")
     parser.add_argument("-f", "--file", type=str, default="data.csv", help="Input CSV file")
     parser.add_argument("-o", "--output", type=str, default="qrcodes.png", help="Output PNG file")
+    parser.add_argument("-d", "--display", help="Display image when created", action='store_true')
     args = parser.parse_args()
 
     if not (2 <= args.sheet <= 8):
@@ -59,6 +60,16 @@ def main():
 
             font = ImageFont.load_default()
             draw_tmp = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+            bbox_default = draw_tmp.textbbox((0, 0), name, font=font)
+            default_height = bbox_default[3] - bbox_default[1]
+
+            try:
+                font_scalar = 3.0
+                target_size = max(1, int(round(default_height * font_scalar)))
+                font = ImageFont.truetype("DejaVuSans.ttf", target_size)
+            except:
+                pass
+
             bbox = draw_tmp.textbbox((0, 0), name, font=font)
             text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
             
@@ -92,6 +103,21 @@ def main():
                 os.remove(f)
             except OSError:
                 pass
+        if args.display:
+            if os.name == 'nt':
+                subprocess.run(
+                    [args.output],
+                    check=True,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.PIPE
+                )
+            else:
+                subprocess.run(
+                    ["open", args.output],
+                    check=True,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.PIPE
+                )
 
 if __name__ == "__main__":
     main()

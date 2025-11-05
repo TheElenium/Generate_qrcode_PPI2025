@@ -9,5 +9,5 @@ pip install -r requirements.txt
 
 ## Usage:
 ```
-python generate_qr.py -g <group_number> -s <sheet_number> [-f <input_csv>] [-o <output_png>] [-h/--help for help]
+python generate_qr.py -g <group_number> -s <sheet_number> [-f <input_csv>] [-o <output_png>] [-d] [-h/--help for help]
 ```
