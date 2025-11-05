@@ -1,7 +1,7 @@
 ## Installation:
 ```
 git clone git@github.com:TheElenium/Generate_qrcode_PPI2025.git
-cd generate_qrcodes_PPI2025
+cd Generate_qrcodes_PPI2025
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
